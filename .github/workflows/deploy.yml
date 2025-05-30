@@ -31,4 +31,4 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: tuan2905
           heroku_email: tuan.dinh@metropolia.fi
-          usedocker: true
+          usedocker: false
