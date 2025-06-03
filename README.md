@@ -75,4 +75,4 @@ heroku-sensor-app/
 # Tekijä
 
 - Nimi: Tuan Dinh, Yasir Abdulwahid 
-- Heroku-sovellus:[https://tuan2905.herokuapp.com/data](https://tuan2905.herokuapp.com/data)
+- Heroku-sovellus:[https://tuan3105.herokuapp.com/data](https://tuan3105.herokuapp.com/data)
