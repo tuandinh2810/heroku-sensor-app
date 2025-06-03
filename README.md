@@ -23,17 +23,6 @@ Tämä sovellus simuloi mittausdataa (lämpötila, kosteus, CO₂), tallentaa se
 
 GET /data - palauttaa 20 viimeisintä mittausta
 
-```json
-[
-  {
-    "timestamp": "2024-05-29 12:34:56",
-    "temperature": 22.5,
-    "humidity": 55.0,
-    "co2": 420
-  },
-  ...
-]
-
 # Paikallinen ajaminen
 - Asenna riippuvuudet
      =>  pip install -r requirements.txt
