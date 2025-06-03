@@ -1,13 +1,15 @@
 
 # Heroku Sensor App
 
-Tämä on yksinkertainen Flask-pohjainen sovellus, joka näyttää mittaustietoja (lämpötila, kosteus, CO₂) SQLite-tietokannasta. Sovellus julkaistaan automaattisesti Herokuun GitHubin kautta (CI/CD).
+Tämä sovellus simuloi mittausdataa (lämpötila, kosteus, CO₂), tallentaa sen SQLite-tietokantaan ja tarjoaa REST API:n datan noutamiseen. Datan syöttö voidaan käynnistää ja pysäyttää Node-REDin kautta MQTT-komentojen avulla. Data visualisoidaan Node-RED dashboardilla. Sovellus on julkaistavissa Herokuun. Sovellus julkaistaan automaattisesti Herokuun GitHubin kautta (CI/CD).
 
 # Ominaisuudet
-
-- REST API palauttaa 20 uusinta mittausdataa `measurements.db`-tiedostosta
-- Luo tietokantataulu automaattisesti, jos sitä ei ole
-- Automaattinen julkaisu Herokuun GitHubista
+- Simuloitu sensoridata (lämpötila, kosteus, CO₂).
+- MQTT-ohjaus: käynnistä tai keskeytä datan syöttö.
+- Tallennus SQLite-tietokantaan.
+- Flask-pohjainen REST API.
+- Node-RED dashboard mittausdatan visualisointiin.
+- Julkaistavissa Herokuun.
 
 # Käytetyt teknologiat
 
@@ -17,12 +19,9 @@ Tämä on yksinkertainen Flask-pohjainen sovellus, joka näyttää mittaustietoj
 - Heroku
 - GitHub Actions (CI/CD)
 
-# API
+# REST API
 
-GET /data
-```
-
-Palauttaa JSON-listan 20 uusimmasta mittauksesta:
+GET /data - palauttaa 20 viimeisintä mittausta
 
 ```json
 [
@@ -36,21 +35,29 @@ Palauttaa JSON-listan 20 uusimmasta mittauksesta:
 ]
 
 # Paikallinen ajaminen
+- Asenna riippuvuudet
+     =>  pip install -r requirements.txt
+- Käynnistä mittaussimulaattori (data + MQTT-ohjaus)
+     => python mqtt_data_sender.py
+- Käynnistä Flask API
+     =>python api_server.py.
 
-```bash
-git clone https://github.com/tuandinh2810/heroku-sensor-app.git
-cd heroku-sensor-app
-pip install -r requirements.txt
-python api_server.py
-```
-Selaa osoitteeseen `http://localhost:5000/data` nähdäksesi mittaustiedot.
+# MQTT-ohjaus (Node-REDistä)
+- Broker: test.mosquitto.org
+- Topic: data/control
+- Payload: start tai stop
 
 # Heroku-julkaisu
+- Luo uusi Heroku-sovellus
+     heroku create tuan3105
+
+- Lähetä sovellus
+     git push heroku main
 
 # Konfiguraatio:
 
-- Procfile: sisältää rivin `web: gunicorn api_server:app`
-- requirements.txt`: sisältää Flaskin ja Gunicornin
+- Procfile: sisältää rivin "web: gunicorn api_server:app"
+- requirements.txt: sisältää Flaskin ja Gunicornin
 - Heroku on yhdistetty GitHub-repoon (branch: main)
 - Automaattinen julkaisu on käytössä
 
